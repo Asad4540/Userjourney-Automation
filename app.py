@@ -16,7 +16,7 @@ def upload_file():
 
     # Assuming the Excel sheet has these fields in the first row
     data = {
-        'name': sheet['A2'].value,
+        'firstname': sheet['A2'].value,
         'surname': sheet['B2'].value,
         'age': sheet['C2'].value
     }
