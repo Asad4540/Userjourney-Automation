@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,54 +8,86 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* Basic styling for the button and modal */
-        body { font-family: Arial, sans-serif; }
-        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                 width: 300px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1); }
-        .modal-content { padding: 20px; }
-        .modal-header { font-weight: bold; }
-        .modal-footer { text-align: right; }
-        #upload-btn { padding: 10px 20px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 650px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content {
+            padding: 20px;
+        }
+
+        .modal-header {
+            font-weight: bold;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        #upload-btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
 
-<h2>Upload Excel File</h2>
-<form id="upload-form" enctype="multipart/form-data">
-    <input type="file" id="file-input" accept=".xlsx">
-    <button type="button" id="upload-btn">Upload</button>
-</form>
+    <h2>Upload Excel File</h2>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" id="file-input" accept=".xlsx">
+        <button type="button" id="upload-btn">Upload</button>
+    </form>
 
-<!-- Modal Structure -->
-<div id="result-modal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">Uploaded Data</div>
-        <div id="modal-body"></div>
-        <div class="modal-footer">
-            <button id="close-btn">Close</button>
+    <!-- Modal Structure -->
+    <div id="result-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Prospect Details</div><hr>
+            <div id="modal-body"></div>
+            <div class="modal-footer">
+                <button id="close-btn">Close</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.getElementById('upload-btn').addEventListener('click', async function() {
-        const fileInput = document.getElementById('file-input');
-        const formData = new FormData();
-        formData.append('file', fileInput.files[0]);
+    <script>
+        document.getElementById('upload-btn').addEventListener('click', async function () {
+            const fileInput = document.getElementById('file-input');
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
 
-        const response = await fetch('/upload', { method: 'POST', body: formData });
-        const data = await response.json();
+            const response = await fetch('/upload', { method: 'POST', body: formData });
+            const data = await response.json();
 
-        if (data.name && data.surname && data.age) {
-            const modalBody = document.getElementById('modal-body');
-            modalBody.innerHTML = `Name: ${data.name} <br> Surname: ${data.surname} <br> Age: ${data.age}`;
-            document.getElementById('result-modal').style.display = 'block';
-        }
-    });
+            if (data.firstname && data.surname && data.age) {
+                const modalBody = document.getElementById('modal-body');
+                modalBody.innerHTML = `Name: ${data.firstname} ${data.surname} &nbsp&nbsp&nbsp&nbsp Offer Name: ${data.age}`;
+                document.getElementById('result-modal').style.display = 'block';
+            }
+        });
 
-    document.getElementById('close-btn').addEventListener('click', function() {
-        document.getElementById('result-modal').style.display = 'none';
-    });
-</script>
+        document.getElementById('close-btn').addEventListener('click', function () {
+            document.getElementById('result-modal').style.display = 'none';
+        });
+    </script>
 
 </body>
+
 </html>
